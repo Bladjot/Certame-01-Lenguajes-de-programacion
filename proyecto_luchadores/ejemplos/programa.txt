@@ -17,6 +17,9 @@ luchador Ken {
     patada: patada_baja(daño=6, costo=4, altura=baja, forma=frontal, giratoria=no);
     bloqueo: bloqueo_bajo;
   }
+  combos {
+    Uppercut(st_req=25) { puño_fuerte, patada_baja }
+  }
 }
 
 simulacion {

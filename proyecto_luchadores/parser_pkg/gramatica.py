@@ -1,14 +1,12 @@
 # ==============================================================
-#  parser/gramatica.py
+#  parser_pkg/gramatica.py
 # ==============================================================
 #  ESTRUCTURAS DE DATOS Y NODOS DE LA GRAMÁTICA
 # --------------------------------------------------------------
-#  Este archivo define las clases que representan los elementos
-#  del lenguaje: luchadores, acciones, combos, condiciones y la
-#  simulación del combate.
+#  Define las clases que representan los elementos del lenguaje:
+#  luchadores, acciones, combos, condiciones y la simulación.
 # --------------------------------------------------------------
-#  Es el equivalente a los "árboles de sintaxis" (AST) que crea
-#  Bison, pero escrito en Python y con nombres en español.
+#  Equivalente a los árboles de sintaxis (AST) de Bison.
 # ==============================================================
 
 # --------------------------------------------------------------
@@ -19,11 +17,11 @@ class AccionAtomica:
     Representa una acción básica del luchador:
     puede ser un golpe, una patada o un bloqueo.
     """
-    def __init__(self, tipo, nombre, daño=0, costo=0,
+    def __init__(self, tipo, nombre, danio=0, costo=0,
                  altura=None, forma=None, giratoria=False):
         self.tipo = tipo          # "golpe", "patada" o "bloqueo"
         self.nombre = nombre
-        self.daño = daño
+        self.daño = danio          # mantener compatibilidad con “daño” en prints
         self.costo = costo
         self.altura = altura      # alta, media, baja
         self.forma = forma        # frontal o lateral
@@ -37,7 +35,7 @@ class AccionAtomica:
 # --------------------------------------------------------------
 class Combo:
     """
-    Representa un conjunto de acciones atómicas.
+    Representa un conjunto de acciones atómicas ejecutadas juntas.
     """
     def __init__(self, nombre, st_req, acciones):
         self.nombre = nombre
@@ -109,7 +107,7 @@ class Condicion:
         return f"({self.quien}.{self.atributo} {self.operador} {self.valor})"
 
 # --------------------------------------------------------------
-# CLASES: Bloques de simulación
+# CLASES DE INSTRUCCIONES Y BLOQUES DE SIMULACIÓN
 # --------------------------------------------------------------
 
 class Usar:

@@ -12,7 +12,8 @@
 
 import ply.yacc as yacc
 from lexer.tokens import tokens, construir_lexer
-from parser.gramatica import *
+from parser_pkg.gramatica import *
+
 
 # --------------------------------------------------------------
 # TABLA DE SÍMBOLOS GLOBAL
@@ -317,3 +318,4 @@ def construir_parser():
 def parsear(texto):
     parser = construir_parser()
     return parser.parse(texto, lexer=construir_lexer())
+

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ==============================================================
 #  lexer/tokens.py
 # ==============================================================
@@ -18,9 +19,6 @@ import ply.lex as lex
 # --------------------------------------------------------------
 # PALABRAS RESERVADAS
 # --------------------------------------------------------------
-# Estas son palabras que tienen un significado especial
-# en el lenguaje y no se pueden usar como nombres de variables.
-
 reservadas = {
     'luchador'   : 'LUCHADOR',
     'stats'      : 'STATS',
@@ -39,10 +37,14 @@ reservadas = {
     'si'         : 'SI',
     'sino'       : 'SINO',
     'usa'        : 'USA',
+
+    # Entidades para condiciones
     'self'       : 'SELF',
     'oponente'   : 'OPONENTE',
     'hp'         : 'HP',
     'st'         : 'ST',
+
+    # Atributos y valores de acciones
     'daño'       : 'DANIO',
     'costo'      : 'COSTO',
     'altura'     : 'ALTURA',
@@ -54,6 +56,8 @@ reservadas = {
     'frontal'    : 'FRONTAL',
     'lateral'    : 'LATERAL',
     'no'         : 'NO',
+
+    # Otros
     'st_req'     : 'ST_REQ',
     'vs'         : 'VS'
 }
@@ -61,9 +65,6 @@ reservadas = {
 # --------------------------------------------------------------
 # LISTA DE TOKENS
 # --------------------------------------------------------------
-# Incluye todos los símbolos, operadores y palabras reservadas
-# que reconocerá el lenguaje.
-
 tokens = [
     # Identificadores y números
     'ID', 'NUMERO',
@@ -71,7 +72,7 @@ tokens = [
     # Símbolos estructurales
     'LLAVE_ABRE', 'LLAVE_CIERRA',
     'PAREN_ABRE', 'PAREN_CIERRA',
-    'COMA', 'PUNTO_Y_COMA', 'DOS_PUNTOS', 'IGUAL',
+    'COMA', 'PUNTO_Y_COMA', 'DOS_PUNTOS', 'IGUAL', 'PUNTO',
 
     # Operadores de comparación
     'MENOR', 'MAYOR', 'MENOR_IGUAL', 'MAYOR_IGUAL', 'IGUAL_IGUAL', 'DISTINTO',
@@ -80,7 +81,6 @@ tokens = [
 # --------------------------------------------------------------
 # EXPRESIONES REGULARES PARA TOKENS SIMPLES
 # --------------------------------------------------------------
-
 t_LLAVE_ABRE   = r'\{'
 t_LLAVE_CIERRA = r'\}'
 t_PAREN_ABRE   = r'\('
@@ -89,6 +89,7 @@ t_COMA         = r','
 t_PUNTO_Y_COMA = r';'
 t_DOS_PUNTOS   = r':'
 t_IGUAL        = r'='
+t_PUNTO        = r'\.'     # ← necesario para self.hp / oponente.st
 
 # Operadores relacionales
 t_MENOR_IGUAL  = r'<='
@@ -101,37 +102,35 @@ t_DISTINTO     = r'!='
 # --------------------------------------------------------------
 # TOKENS CON ACCIONES (funciones)
 # --------------------------------------------------------------
-
 def t_NUMERO(t):
     r'\d+'
     t.value = int(t.value)
     return t
 
+# Fuerza la prioridad de palabras reservadas sobre ID
 def t_ID(t):
     r'[A-Za-z_áéíóúÁÉÍÓÚñÑ][A-Za-z0-9_áéíóúÁÉÍÓÚñÑ]*'
     palabra = t.value.lower()
-    # Verificar si es una palabra reservada
-    t.type = reservadas.get(palabra, 'ID')
+    if palabra == "vs":
+        t.type = "VS"
+    else:
+        t.type = reservadas.get(palabra, 'ID')
     return t
+
 
 # --------------------------------------------------------------
 # REGLAS ESPECIALES
 # --------------------------------------------------------------
-
-# Comentarios de línea
 def t_COMENTARIO(t):
     r'//[^\n]*'
-    pass  # Ignora el comentario
+    pass  # Ignorar comentarios
 
-# Ignorar espacios y tabulaciones
-t_ignore = ' \t\r'
+t_ignore = ' \t\r'  # Espacios y tabulaciones
 
-# Contar saltos de línea
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
-# Errores léxicos
 def t_error(t):
     print(f"⚠️  Caracter no permitido: '{t.value[0]}' en la línea {t.lexer.lineno}")
     t.lexer.skip(1)
@@ -139,7 +138,6 @@ def t_error(t):
 # --------------------------------------------------------------
 # CONSTRUCTOR DEL LÉXER
 # --------------------------------------------------------------
-
 def construir_lexer(**kwargs):
     """
     Construye y devuelve el analizador léxico.

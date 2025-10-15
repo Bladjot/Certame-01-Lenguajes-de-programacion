@@ -13,8 +13,11 @@
 #      python main.py
 # ==============================================================
 
-import os
-from parser.interprete import parsear, ejecutar
+# 🔧 Asegura que Python pueda importar módulos desde el nivel superior
+import sys, os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
+from parser_pkg.interprete import parsear, ejecutar
 
 # --------------------------------------------------------------
 # CONFIGURACIÓN DE RUTA DEL ARCHIVO DE ENTRADA
