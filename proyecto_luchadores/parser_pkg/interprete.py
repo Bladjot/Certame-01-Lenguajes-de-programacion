@@ -236,9 +236,9 @@ def p_operador(p):
 
 def p_error(p):
     if p:
-        print(f"🚫 Error de sintaxis en '{p.value}' (línea {p.lineno})")
+        print(f" Error de sintaxis en '{p.value}' (línea {p.lineno})")
     else:
-        print("🚫 Error de sintaxis al final del archivo")
+        print(" Error de sintaxis al final del archivo")
 
 # --------------------------------------------------------------
 # EJECUCIÓN DE LA SIMULACIÓN
@@ -252,7 +252,7 @@ def ejecutar(programa):
     turnos = {t.luchador: t for t in sim.turnos}
     orden = [sim.config.inicia, sim.config.luch1 if sim.config.inicia != sim.config.luch1 else sim.config.luch2]
 
-    print(f"\n⚔️  COMBATE: {l1.nombre} vs {l2.nombre}")
+    print(f"\n  COMBATE: {l1.nombre} vs {l2.nombre}")
     print(f"Turnos máximos: {sim.config.turnos}\n")
 
     for t in range(sim.config.turnos):
@@ -263,7 +263,7 @@ def ejecutar(programa):
             if quien not in turnos:
                 continue
 
-            print(f"➡️  Turno {t+1} de {yo.nombre}:")
+            print(f"  Turno {t+1} de {yo.nombre}:")
             ejecutar_turno(turnos[quien].acciones, yo, rival)
 
             if l1.hp <= 0 or l2.hp <= 0:
@@ -271,15 +271,15 @@ def ejecutar(programa):
         if l1.hp <= 0 or l2.hp <= 0:
             break
 
-    print("\n🏁 RESULTADO FINAL:")
+    print("\n RESULTADO FINAL:")
     print(f"{l1.nombre}: HP={l1.hp}, ST={l1.st}")
     print(f"{l2.nombre}: HP={l2.hp}, ST={l2.st}")
     if l1.hp > l2.hp:
-        print(f"🔥 Gana {l1.nombre}")
+        print(f" Gana {l1.nombre}")
     elif l2.hp > l1.hp:
-        print(f"🔥 Gana {l2.nombre}")
+        print(f" Gana {l2.nombre}")
     else:
-        print("🤝 Empate")
+        print(" Empate")
 
 # --------------------------------------------------------------
 # FUNCIONES AUXILIARES DE EJECUCIÓN
@@ -300,27 +300,27 @@ def aplicar_accion(nombre, yo, rival):
         combo = yo.combos[nombre]
         if yo.st >= combo.st_req:
             yo.st -= combo.st_req
-            print(f"💥 {yo.nombre} ejecuta combo {nombre}")
+            print(f" {yo.nombre} ejecuta combo {nombre}")
             for act in combo.acciones:
                 aplicar_accion(act, yo, rival)
         else:
             primero = combo.acciones[0]
-            print(f"⚠️ {yo.nombre} no tiene ST suficiente, usa {primero} en su lugar")
+            print(f" {yo.nombre} no tiene ST suficiente, usa {primero} en su lugar")
             aplicar_accion(primero, yo, rival)
     elif nombre in yo.acciones:
         a = yo.acciones[nombre]
         if a.tipo == "bloqueo":
-            print(f"🛡️ {yo.nombre} usa {nombre} (bloqueo)")
+            print(f" {yo.nombre} usa {nombre} (bloqueo)")
             return
         if yo.st < a.costo:
-            print(f"❌ {yo.nombre} no tiene suficiente ST ({yo.st}/{a.costo})")
+            print(f" {yo.nombre} no tiene suficiente ST ({yo.st}/{a.costo})")
             return
         yo.st -= a.costo
         rival.hp -= a.daño
         rival.hp = max(0, rival.hp)
-        print(f"🥊 {yo.nombre} usa {nombre} (-{a.daño} HP al rival)")
+        print(f" {yo.nombre} usa {nombre} (-{a.daño} HP al rival)")
     else:
-        print(f"❌ Acción '{nombre}' no existe para {yo.nombre}")
+        print(f" Acción '{nombre}' no existe para {yo.nombre}")
 
 # --------------------------------------------------------------
 # CONSTRUCCIÓN DEL PARSER

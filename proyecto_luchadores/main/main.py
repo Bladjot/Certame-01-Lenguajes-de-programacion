@@ -40,7 +40,7 @@ def main():
     ruta = obtener_ruta_programa()
 
     print("==============================================")
-    print("     🥋 INTÉRPRETE DE LENGUAJE DE LUCHADORES")
+    print("      INTÉRPRETE DE LENGUAJE DE LUCHADORES")
     print("==============================================")
     print(f"Leyendo archivo: {ruta}\n")
 
@@ -48,7 +48,7 @@ def main():
         with open(ruta, "r", encoding="utf-8") as archivo:
             codigo = archivo.read()
     except FileNotFoundError:
-        print("❌ No se encontró el archivo programa.txt en /ejemplos/")
+        print(" No se encontró el archivo programa.txt en /ejemplos/")
         return
 
     try:
@@ -59,9 +59,9 @@ def main():
         ejecutar(programa)
 
     except SyntaxError as e:
-        print(f"\n🚨 Error de sintaxis: {e}")
+        print(f"\n Error de sintaxis: {e}")
     except Exception as e:
-        print(f"\n💥 Error en la ejecución: {e}")
+        print(f"\n Error en la ejecución: {e}")
 
 # --------------------------------------------------------------
 # EJECUCIÓN DIRECTA DEL PROGRAMA

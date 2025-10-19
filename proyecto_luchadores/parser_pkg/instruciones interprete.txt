@@ -1,11 +1,11 @@
-# 🥋 Intérprete del Lenguaje de Luchadores
+#  Intérprete del Lenguaje de Luchadores
 
 Este proyecto implementa un **lenguaje de programación personalizado** para definir luchadores, sus movimientos y simular combates entre ellos.  
 Fue desarrollado en **Python** utilizando **Flex y Bison a través de la librería PLY (Python Lex-Yacc)**.
 
 ---
 
-## 🧠 Objetivo
+##  Objetivo
 
 El propósito es crear un lenguaje con **dos fases principales**:
 
@@ -43,7 +43,7 @@ proyecto_luchadores/
 │
 └── ejemplos/
     └── programa.txt            # Archivo de entrada con el código del lenguaje
-💬 Ejemplo de código fuente (programa.txt)
+ Ejemplo de código fuente (programa.txt)
 txt
 Copiar código
 luchador Ryu {
@@ -97,17 +97,17 @@ Copiar código
 python main.py
 Verás el desarrollo del combate paso a paso, junto con el resultado final.
 
-🧩 Funcionamiento interno
+ Funcionamiento interno
 El proyecto se basa en los principios de compiladores, dividiéndose en tres etapas:
 
-1️⃣ Análisis léxico (lexer/tokens.py)
+ Análisis léxico (lexer/tokens.py)
 Define las expresiones regulares que identifican los tokens (palabras clave, identificadores, números, símbolos, operadores).
 
 Cada token se define con una variable t_TOKEN o una función t_nombre().
 
 Se encarga de ignorar comentarios y espacios y manejar errores léxicos.
 
-2️⃣ Análisis sintáctico (parser/interprete.py)
+ Análisis sintáctico (parser/interprete.py)
 Implementa la gramática libre de contexto (GLC) con PLY, equivalente a las producciones de Bison.
 
 Cada regla se define como una función con el formato:
@@ -125,7 +125,7 @@ def p_instruccion(p):
     """instruccion : USA ID PUNTO_Y_COMA
                    | SI PAREN_ABRE condicion PAREN_CIERRA LLAVE_ABRE lista_instrucciones LLAVE_CIERRA
                    | SI PAREN_ABRE condicion PAREN_CIERRA LLAVE_ABRE lista_instrucciones LLAVE_CIERRA SINO LLAVE_ABRE lista_instrucciones LLAVE_CIERRA"""
-🔹 Cada línea dentro del docstring """ ... """ define una producción posible para esa regla.
+ Cada línea dentro del docstring """ ... """ define una producción posible para esa regla.
 Por ejemplo:
 
 usa puño_fuerte;
@@ -134,7 +134,7 @@ si (self.st > 50) { usa golpe; }
 
 si (...) { ... } sino { ... }
 
-🔹 El parámetro p funciona como una lista de símbolos, donde:
+ El parámetro p funciona como una lista de símbolos, donde:
 
 p[0] es el resultado (lo que se devuelve a la regla superior),
 
@@ -150,7 +150,7 @@ elif len(p) == 8:
     p[0] = SiSino(p[3], p[6], [])  # Condicional simple
 else:
     p[0] = SiSino(p[3], p[6], p[10])  # Condicional con "sino"
-3️⃣ Ejecución del combate
+Ejecución del combate
 Se crean objetos de las clases definidas en gramatica.py (Luchador, Combo, Condición, etc.).
 
 El intérprete recorre la simulación, turno por turno:
@@ -163,7 +163,7 @@ Controla la energía (ST) y los puntos de vida (HP).
 
 Aplica las reglas de fallo de combo (si no hay ST suficiente, se usa la primera acción del combo).
 
-🧩 Árbol sintáctico simplificado
+ Árbol sintáctico simplificado
 Para la instrucción:
 
 txt
@@ -185,24 +185,24 @@ SiSino(
 🏁 Resultado del combate (ejemplo)
 yaml
 Copiar código
-⚔️  COMBATE: Ryu vs Ken
+  COMBATE: Ryu vs Ken
 Turnos máximos: 5
 
-➡️  Turno 1 de Ryu:
-🥊 Ryu usa puño_fuerte (-10 HP al rival)
-🥊 Ryu usa patada_baja (-6 HP al rival)
+  Turno 1 de Ryu:
+ Ryu usa puño_fuerte (-10 HP al rival)
+ Ryu usa patada_baja (-6 HP al rival)
 
-➡️  Turno 1 de Ken:
-🥊 Ken usa puño_fuerte (-10 HP al rival)
-💥 Ken ejecuta combo Hadouken
-🥊 Ken usa puño_fuerte (-10 HP al rival)
-🥊 Ken usa patada_baja (-6 HP al rival)
+  Turno 1 de Ken:
+ Ken usa puño_fuerte (-10 HP al rival)
+ Ken ejecuta combo Hadouken
+ Ken usa puño_fuerte (-10 HP al rival)
+ Ken usa patada_baja (-6 HP al rival)
 
-🏁 RESULTADO FINAL:
+ RESULTADO FINAL:
 Ryu: HP=74, ST=83
 Ken: HP=84, ST=73
-🔥 Gana Ken
-🧾 Conclusión
+ Gana Ken
+ Conclusión
 Este intérprete muestra el flujo completo de un mini lenguaje imperativo, desde el análisis léxico hasta la ejecución.
 Permite comprender de forma práctica cómo funcionan:
 
