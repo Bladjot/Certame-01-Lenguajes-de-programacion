@@ -15,7 +15,7 @@ Para instalar PLY, ejecuta:
 pip install ply
 ```
 
-## 📁 Estructura del Proyecto
+##  Estructura del Proyecto
 
 El código está organizado de manera modular para separar las distintas fases del proceso de interpretación:
 
@@ -27,7 +27,8 @@ proyecto_luchadores/
 │
 ├── parser_pkg/
 │   ├── gramatica.py        # Clases del AST - Define las estructuras de datos (Luchador, Combo, etc.).
-│   └── interprete.py       # Analizador Sintáctico (Bison) y Ejecución - Contiene la gramática y la lógica del combate.
+│   ├── interprete.py       # Analizador Sintáctico (Bison) - Construye el árbol de objetos del programa.
+│   └── motor_combate.py    # Motor de Simulación - Ejecuta el combate a partir del árbol generado por el parser.
 │
 ├── main/
 │   └── main.py             # Punto de Entrada - Lee el archivo de código y ejecuta el intérprete.
@@ -69,7 +70,7 @@ Permite configurar y ejecutar una pelea:
 python main.py
 ```
 
-El intérprete leerá el archivo, procesará la simulación y mostrará el desarrollo del combate turno a turno en la consola, junto con el resultado final.
+El intérprete leerá el archivo, lo parseará con `parser_pkg/interprete.py` para generar el árbol de objetos y luego delegará la simulación a `parser_pkg/motor_combate.py`. El resultado incluye el detalle turno a turno y el desenlace del combate.
 
 ## Ejemplo de Código (`programa.txt`)
 
@@ -125,4 +126,4 @@ El proceso de interpretación sigue tres etapas clave:
 
 1.  **Análisis Léxico (`lexer/tokens.py`)**: El código fuente en texto plano se descompone en una secuencia de tokens (palabras clave, identificadores, números, símbolos).
 2.  **Análisis Sintáctico (`parser_pkg/interprete.py`)**: El parser verifica que la secuencia de tokens siga las reglas gramaticales definidas. Si la sintaxis es correcta, construye un Árbol de Sintaxis Abstracto (AST) utilizando las clases de `gramatica.py`.
-3.  **Ejecución (`parser_pkg/interprete.py`)**: La función `ejecutar` recorre el AST, simulando el combate turno por turno. Evalúa las condiciones, aplica el daño, gestiona la energía (ST) y los puntos de vida (HP) de los luchadores hasta que se cumple una condición de fin de combate.
+3.  **Ejecución (`parser_pkg/motor_combate.py`)**: La función `ejecutar` recibe el programa ya parseado y simula el combate turno por turno. Evalúa las condiciones, aplica el daño, gestiona la energía (ST) y los puntos de vida (HP) de los luchadores hasta que se cumple una condición de fin de combate.

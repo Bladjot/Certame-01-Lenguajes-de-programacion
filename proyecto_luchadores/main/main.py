@@ -17,7 +17,8 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-from parser_pkg.interprete import parsear, ejecutar
+from parser_pkg.interprete import parsear
+from parser_pkg.motor_combate import ejecutar
 
 # --------------------------------------------------------------
 # CONFIGURACIÓN DE RUTA DEL ARCHIVO DE ENTRADA
