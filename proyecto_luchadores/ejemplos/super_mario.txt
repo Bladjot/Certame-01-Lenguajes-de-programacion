@@ -1,0 +1,39 @@
+luchador Mario {
+  stats(hp=120, st=80);
+  acciones {
+    golpe: puño_mario(daño=8, costo=5, altura=media, forma=frontal, giratoria=no);
+    patada: salto_mario(daño=12, costo=8, altura=alta, forma=frontal, giratoria=no);
+    bloqueo: bloqueo_fontanero;
+  }
+  combos {
+    SuperMario(st_req=20) { puño_mario, salto_mario }
+  }
+}
+
+luchador Luigi {
+  stats(hp=100, st=100);
+  acciones {
+    golpe: puño_luigi(daño=7, costo=4, altura=media, forma=frontal, giratoria=no);
+    patada: salto_luigi(daño=10, costo=6, altura=alta, forma=frontal, giratoria=si);
+    bloqueo: bloqueo_verde;
+  }
+  combos {
+    SuperLuigi(st_req=18) { puño_luigi, puño_luigi, salto_luigi }
+  }
+}
+
+simulacion {
+  config {
+    luchadores: Mario vs Luigi;
+    inicia: Mario;
+    turnos_max: 5;
+  }
+  pelea {
+    turno Mario {
+      usa SuperMario;
+    }
+    turno Luigi {
+      usa puño_luigi;
+    }
+  }
+}

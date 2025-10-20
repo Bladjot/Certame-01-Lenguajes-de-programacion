@@ -1,0 +1,39 @@
+luchador Prueba1 {
+  stats(hp=50, st=50);
+  acciones {
+    golpe: golpe_rapido(daño=5, costo=3, altura=media, forma=frontal, giratoria=no);
+    patada: patada_simple(daño=4, costo=2, altura=baja, forma=frontal, giratoria=no);
+    bloqueo: bloqueo_basico;
+  }
+  combos {
+    Combo1(st_req=10) { golpe_rapido, patada_simple }
+  }
+}
+
+luchador Prueba2 {
+  stats(hp=60, st=40);
+  acciones {
+    golpe: golpe_fuerte(daño=8, costo=5, altura=media, forma=frontal, giratoria=no);
+    patada: patada_alta(daño=6, costo=4, altura=alta, forma=frontal, giratoria=no);
+    bloqueo: bloqueo_alto;
+  }
+  combos {
+    Combo2(st_req=15) { golpe_fuerte, golpe_fuerte }
+  }
+}
+
+simulacion {
+  config {
+    luchadores: Prueba1 vs Prueba2;
+    inicia: Prueba1;
+    turnos_max: 3;
+  }
+  pelea {
+    turno Prueba1 {
+      usa golpe_rapido;
+    }
+    turno Prueba2 {
+      usa golpe_fuerte;
+    }
+  }
+}

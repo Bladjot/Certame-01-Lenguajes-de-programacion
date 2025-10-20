@@ -1,0 +1,39 @@
+luchador Goku {
+  stats(hp=200, st=150);
+  acciones {
+    golpe: kamehameha(daño=25, costo=20, altura=media, forma=frontal, giratoria=no);
+    patada: patada_voladora(daño=18, costo=12, altura=alta, forma=frontal, giratoria=si);
+    bloqueo: barrera_ki;
+  }
+  combos {
+    SuperSaiyan(st_req=50) { kamehameha, patada_voladora, kamehameha }
+  }
+}
+
+luchador Vegeta {
+  stats(hp=180, st=160);
+  acciones {
+    golpe: big_bang_attack(daño=22, costo=18, altura=media, forma=frontal, giratoria=no);
+    patada: patada_principe(daño=16, costo=10, altura=media, forma=lateral, giratoria=no);
+    bloqueo: orgullo_saiyan;
+  }
+  combos {
+    FinalFlash(st_req=45) { big_bang_attack, big_bang_attack }
+  }
+}
+
+simulacion {
+  config {
+    luchadores: Goku vs Vegeta;
+    inicia: Goku;
+    turnos_max: 6;
+  }
+  pelea {
+    turno Goku {
+      usa SuperSaiyan;
+    }
+    turno Vegeta {
+      usa FinalFlash;
+    }
+  }
+}

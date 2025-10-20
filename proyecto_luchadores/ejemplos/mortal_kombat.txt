@@ -1,0 +1,39 @@
+luchador Scorpion {
+  stats(hp=120, st=80);
+  acciones {
+    golpe: puño_de_fuego(daño=12, costo=8, altura=media, forma=frontal, giratoria=no);
+    patada: patada_flamigera(daño=15, costo=10, altura=alta, forma=lateral, giratoria=si);
+    bloqueo: bloqueo_defensivo;
+  }
+  combos {
+    Hellfire(st_req=30) { puño_de_fuego, patada_flamigera }
+  }
+}
+
+luchador SubZero {
+  stats(hp=110, st=90);
+  acciones {
+    golpe: puño_helado(daño=11, costo=7, altura=media, forma=frontal, giratoria=no);
+    patada: patada_congelante(daño=14, costo=9, altura=baja, forma=frontal, giratoria=no);
+    bloqueo: escudo_de_hielo;
+  }
+  combos {
+    IceBlast(st_req=25) { puño_helado, puño_helado, patada_congelante }
+  }
+}
+
+simulacion {
+  config {
+    luchadores: Scorpion vs SubZero;
+    inicia: Scorpion;
+    turnos_max: 8;
+  }
+  pelea {
+    turno Scorpion {
+      usa Hellfire;
+    }
+    turno SubZero {
+      usa IceBlast;
+    }
+  }
+}
